@@ -1,27 +1,38 @@
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #cf2582;
-    color: #333;
     margin: 0;
-    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f0f4f8, #d9e8f5);
   }
   
   h1 {
-    text-align: center;
-    margin-top: 20px;
+    font-size: 2.5em;
+    color: #333;
   }
   
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+  h2 {
+    font-size: 2em;
+    color: #444;
   }
   
-  .chart-container {
-    background: #b14d4d;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(32, 128, 102, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
+  button, select {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover, select:hover {
+    background-color: #f1f1f1;
+  }
+  
+  button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+  }
+  
+  button:hover {
+    background: #0056b3;
   }
   

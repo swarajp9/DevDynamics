@@ -1,4 +1,3 @@
-// src/components/Dashboard.tsx
 import React, { useState, useMemo } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar
@@ -6,8 +5,39 @@ import {
 import styled from 'styled-components';
 import Filter from './Filter.tsx';
 
+const DashboardContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
 const ChartContainer = styled.div`
-  margin-top: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+`;
+
+const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  select {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
 `;
 
 interface ActivityMeta {
@@ -91,8 +121,20 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   }
 
   return (
-    <>
-      <Filter setFilter={setFilter} />
+    <DashboardContainer>
+      <FilterContainer>
+        <label htmlFor="filter">Filter activities by type:</label>
+        <select id="filter" onChange={(e) => setFilter(e.target.value)}>
+          <option value="all">All</option>
+          <option value="PR Open">PR Open</option>
+          <option value="PR Merged">PR Merged</option>
+          <option value="Commits">Commits</option>
+          <option value="PR Reviewed">PR Reviewed</option>
+          <option value="PR Comments">PR Comments</option>
+          <option value="Incident Alerts">Incident Alerts</option>
+          <option value="Incidents Resolved">Incidents Resolved</option>
+        </select>
+      </FilterContainer>
       <ChartContainer>
         <h2>Total Activity</h2>
         <BarChart width={600} height={300} data={totalActivityData}>
@@ -119,7 +161,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           ))}
         </LineChart>
       </ChartContainer>
-    </>
+    </DashboardContainer>
   );
 };
 

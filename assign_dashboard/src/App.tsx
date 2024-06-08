@@ -1,4 +1,4 @@
-// src/App.tsx
+
 import React, { useEffect, useState } from 'react';
 import { fetchData } from './api.ts';
 import Dashboard from './components/Dashboard.tsx';
@@ -7,8 +7,26 @@ import './App.css';
 
 const AppContainer = styled.div`
   font-family: 'Poppins', sans-serif;
-  background-color: #bad7f5;
+  background: linear-gradient(135deg, #f0f4f8, #d9e8f5);
+  min-height: 100vh;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Title = styled.h1`
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 0px;
+  text-align: center;
+`;
+
+const H3 = styled.h3`
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 25px;
+  text-align: center;
 `;
 
 const App: React.FC = () => {
@@ -28,7 +46,8 @@ const App: React.FC = () => {
 
   return (
     <AppContainer>
-      <h1>Developer Activity Dashboard</h1>
+      <Title>Developer Activity Dashboard</Title>
+      <H3>Track and Visualize Weekly Developer Activities</H3>
       <Dashboard data={data} />
     </AppContainer>
   );
