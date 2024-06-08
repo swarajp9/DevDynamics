@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { fetchData } from './api.ts';
 import Dashboard from './components/Dashboard.tsx';
 import styled from 'styled-components';
+import './App.css';
 
 const AppContainer = styled.div`
   font-family: 'Poppins', sans-serif;
-  background-color: #f0f4f8;
+  background-color: #bad7f5;
   padding: 20px;
 `;
 

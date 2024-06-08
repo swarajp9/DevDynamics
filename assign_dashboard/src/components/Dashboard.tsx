@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// src/components/Dashboard.tsx
+import React, { useState, useMemo } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar
 } from 'recharts';
@@ -50,27 +51,44 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   const [filter, setFilter] = useState('all');
 
+  const filteredActivityMeta = useMemo(() => {
+    if (!data) return [];
+    return filter === 'all'
+      ? data.activityMeta
+      : data.activityMeta.filter(meta => meta.label === filter);
+  }, [filter, data]);
+
+  const totalActivityData = useMemo(() => {
+    if (!data) return [];
+    return data.rows.map(row => {
+      const activity = { name: row.name } as any;
+      row.totalActivity.forEach(act => {
+        if (filter === 'all' || act.name === filter) {
+          activity[act.name] = Number(act.value);
+        }
+      });
+      return activity;
+    });
+  }, [filter, data]);
+
+  const dayWiseData = useMemo(() => {
+    if (!data) return [];
+    return data.rows.flatMap(row => 
+      row.dayWiseActivity.map(day => {
+        const activity = { date: day.date } as any;
+        day.items.children.forEach(item => {
+          if (filter === 'all' || item.label === filter) {
+            activity[item.label] = Number(item.count);
+          }
+        });
+        return activity;
+      })
+    );
+  }, [filter, data]);
+
   if (!data || !data.rows) {
     return <div>No data available</div>;
   }
-
-  const totalActivityData = data.rows.map(row => {
-    const activity = { name: row.name } as any;
-    row.totalActivity.forEach(act => {
-      activity[act.name] = Number(act.value);
-    });
-    return activity;
-  });
-
-  const dayWiseData = data.rows.flatMap(row => 
-    row.dayWiseActivity.map(day => {
-      const activity = { date: day.date } as any;
-      day.items.children.forEach(item => {
-        activity[item.label] = Number(item.count);
-      });
-      return activity;
-    })
-  );
 
   return (
     <>
@@ -83,7 +101,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          {data.activityMeta.map(meta => (
+          {filteredActivityMeta.map(meta => (
             <Bar key={meta.label} dataKey={meta.label} fill={meta.fillColor} />
           ))}
         </BarChart>
@@ -96,7 +114,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          {data.activityMeta.map(meta => (
+          {filteredActivityMeta.map(meta => (
             <Line key={meta.label} type="monotone" dataKey={meta.label} stroke={meta.fillColor} />
           ))}
         </LineChart>
