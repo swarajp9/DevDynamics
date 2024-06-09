@@ -2,13 +2,13 @@ import axios from 'axios';
 
 export const fetchData = async () => {
   try {
-    const response = await axios.get('http://localhost:4000/data');
+    const response = await axios.get('/data.json');
     console.log('Full response:', response);
     console.log('response.data:', response.data); // Log the structure of response.data
 
     // Ensure response structure is correct
-    if (response.data && response.data.AuthorWorklog) {
-      const data = response.data.AuthorWorklog;
+    if (response.data && response.data.data && response.data.data.AuthorWorklog) {
+      const data = response.data.data.AuthorWorklog;
       console.log('Fetched data:', data); // Log fetched data
       return data;
     } else {
